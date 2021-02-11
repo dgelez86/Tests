@@ -112,20 +112,25 @@ const addFunction = (num1, num2) => num1 + num2
 // 6. Crea la función potenciacion que acepte como argumento dos números y devuelva el resultado de elevar el primero(a) al segundo(b) (a^b)
 const powerFunction = (num1, num2) => Math.pow(num1, num2)
 // 7. Crea la función separarPalabras que acepte como argumento un string y devuelva un array de palabras 'hola mundo' => [hola, mundo]
-const stringToArray = phrase => {
-    let count = 0, substr = [], pos = 0
-    for (let i = 0 ; i < phrase.length ; i++) 
-        if (phrase[i] === " ") count++ 
-    for (let i = 0 ; i <= count ; i++) 
-        substr[i] = "substr" + count
-    for (let i = 0 ; i < phrase.length ; i++) {
-        substr[pos] += phrase[i]
-        if (phrase[i] === " ") pos++
+const stringWordsToArray = phrase => {
+	let arrayPosition = 0, wordsOnArray = []
+	for (let i = 0 ; i < phrase.length ; i++) {
+		if (wordsOnArray[arrayPosition] === undefined) wordsOnArray[arrayPosition] = ""
+    	wordsOnArray[arrayPosition] += phrase[i]
+		if (phrase[i] === " ") {
+			let deleteSpace = wordsOnArray[arrayPosition]
+			wordsOnArray[arrayPosition] = ""
+			for (let i = 0 ; i < deleteSpace.length-1 ; i++) {
+				wordsOnArray[arrayPosition] += deleteSpace[i]
+			}
+			arrayPosition++
+		}
     }
+	return wordsOnArray
 }
 // 8. Crea la función repetirString que acepte como argumento un string y un número y devuelva un string que sea el resultado de concatenar el primer string el número dado de veces
 const repeatString = (phrase, times) => {
-    phrase.concat(phrase).repeat(times)
+    return phrase.concat(" / ").repeat(times)
 }
 // -------------------------const repeatStringRecursive = (phrase, times) =>
 //     if (times <= 0) return phrase.concat(repeatStringRecursive(phrase, times)
@@ -146,9 +151,17 @@ const esPrimo = num1 => {
 // 11. Crear la función obtenerPares que acepta como argumento un array de números y devuelva un array con los elementos pares
 const obtenerPares = arrayNumeros => {
     let arrayNumerosPares = []
-    arrayNumeros.array.forEach(el => {
+    arrayNumeros.forEach(el => {
         if (el % 2 == 0) arrayNumerosPares.push(el)
-    });
+    })
+    return arrayNumerosPares
+}
+
+const obtenerPares = arrayNumeros => {
+    let arrayNumerosPares = []
+    arrayNumeros.map(el => {
+        if (el % 2 == 0) arrayNumerosPares.push(el)
+    })
     return arrayNumerosPares
 }
 // 12. Crear la función pintarArray que acepte como argumento un array y devuelva una cadena de texto Array entrada: [0, 1, 2] String salida: '[0, 1, 2]'
