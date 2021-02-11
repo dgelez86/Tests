@@ -220,7 +220,7 @@ const obtenerImpares = arrayNumeros => {
     return arrayNumerosImpares
 }
 // 25. Crear la función sumarArray que acepte como argumento un array numérico y devuelva la suma de los números en el array Array: [1, 2, 3] resultado: 6
-const sumarArray = arrayNumeros => arrayNumeros.reduce((result, el) => result + el)
+const sumArray = numArray => numArray.reduce((result, el) => result + el)
 // 26. Crear la función multiplicarArray que acepte como argumento un array numérico y devuelva la multiplicación de los números en el array Array: [2, 3, 4] resultado: 24
 
 
