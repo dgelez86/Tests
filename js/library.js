@@ -129,59 +129,59 @@ const randomNumber = (min, max) => {
 }
 
 // Capicua number */
-const checkCapicua = (userNumber = 0) => {
+const checkCapicua = (num = 0) => {
 
-	if (!userNumber) return console.warn('Need to introduce a number')
-	if (typeof userNumber !== 'number') return console.warn('Need to be a number')
+	if (!num) return console.warn('Need to introduce a number')
+	if (typeof num !== 'number') return console.warn('Need to be a number')
 
-	userNumber = userNumber.toString()
-	let isCapicua = userNumber.toString().split('').reverse().join('')
-	if (isCapicua === userNumber) console.log(`Number ${userNumber} is capicua`) 
-	else console.log(`Number ${userNumber} is not capicua`)
+	num = num.toString()
+	let isCapicua = num.toString().split('').reverse().join('')
+	if (isCapicua === num) console.log(`Number ${num} is capicua`) 
+	else console.log(`Number ${num} is not capicua`)
 
 }
 
 // Factorial
-const showFactorial = (userNumber = undefined) => {
+const showFactorial = (num = undefined) => {
 
-	if (!userNumber) return console.info('Need to introduce a number')
-	if (typeof userNumber !== 'number') return console.warn('Need to be a number')
-	if (userNumber === 0 || Math.sign(userNumber) === -1) return console.error('Number must be above 0') 
+	if (!num) return console.info('Need to introduce a number')
+	if (typeof num !== 'number') return console.warn('Need to be a number')
+	if (num === 0 || Math.sign(num) === -1) return console.error('Number must be above 0') 
 
 	let factorial = 1
-	for (let i = userNumber ; i >= 1 ; i--) {
+	for (let i = num ; i >= 1 ; i--) {
 		factorial *= i
 	}
-	console.log(`Factorial of ${userNumber} is ${factorial}`)
+	console.log(`Factorial of ${num} is ${factorial}`)
 
 }
 
 // Prime number
-const isPrime = (userNumber = undefined) => {
+const isPrime = (num = undefined) => {
 
-	if (userNumber === undefined) return console.info('Need to introduce a number')
-	if (typeof userNumber !== 'number') return console.warn('Need to be a number')
-	if (userNumber === 0) return console.info('Number 0 is not prime or not-prime')
-	if (userNumber === 1) return console.info('Number 1 is prime') 
-	if (Math.sign(userNumber) === -1) return console.error('Number can not be negative')
+	if (num === undefined) return console.info('Need to introduce a number')
+	if (typeof num !== 'number') return console.warn('Need to be a number')
+	if (num === 0) return console.info('Number 0 is not prime or not-prime')
+	if (num === 1) return console.info('Number 1 is prime') 
+	if (Math.sign(num) === -1) return console.error('Number can not be negative')
 
-	for (let i = 2 ; i < userNumber ; i++) {
-		if (userNumber % i === 0) return console.log(`Number ${userNumber} is not prime`)
+	for (let i = 2 ; i < num ; i++) {
+		if (num % i === 0) return console.log(`Number ${num} is not prime`)
 	}
 
-	console.log(`Number ${userNumber} is prime`)
+	console.log(`Number ${num} is prime`)
 
 }
 
 // Par-Impar
-const isPar = (userNumber = undefined) => {
+const isPar = (num = undefined) => {
 
-	if (userNumber === 0) return console.info('Number 0 is 0, not par, nor impar')
-	if (!userNumber) return console.info('Need to introduce a number')
-	if (typeof userNumber !== 'number') return console.warn('Need to be a number')
+	if (num === 0) return console.info('Number 0 is 0, not par, nor impar')
+	if (!num) return console.info('Need to introduce a number')
+	if (typeof num !== 'number') return console.warn('Need to be a number')
 
-	if (userNumber % 2 === 0) console.log(`Number ${userNumber} is par`)
-	else console.log(`Number ${userNumber} is impar`)
+	if (num % 2 === 0) console.log(`Number ${num} is par`)
+	else console.log(`Number ${num} is impar`)
 
 }
 
@@ -206,18 +206,19 @@ const celsiusFahrConversion = (temperature = undefined, unit = undefined) => {
 
 }
 
-// Binary/Decimal conversion
-const binaryDecimalConversion = (userNumber = undefined, base = undefined) => {
+//----------------------------------------------------------------------------------------------------------------------------
+// Binary/Decimal conversion ---------- Incomplete
+const binaryDecimalConversion = (num = undefined, base = undefined) => {
 
-	if (userNumber === undefined) return console.log('Need to introduce a number to convert')
-	if (userNumber === 0) return console.log(' Number 0 is 0 in every notation')
+	if (num === undefined) return console.log('Need to introduce a number to convert')
+	if (num === 0) return console.log(' Number 0 is 0 in every notation')
 	if (!base) return console.log('Need to introduce a base')
 	if (typeof base !== 'number' || !/(2|10)/.test(base)) 
 		return console.log('Base must be 2 (binary) or 10 (decimal)')
-	if (base === 2 && !/(0|1)/.test(userNumber)) 
+	if (base === 2 && !/(0|1)/.test(num)) 
 		return console.log('Numbers in binary only can contains 0s and 1s')
 
-	let numberToString = userNumber.toString()
+	let numberToString = num.toString()
 	if (base === 2) console.log(Number.parseInt())
 	else console.log()
 
@@ -237,21 +238,24 @@ const introduceElement = (array, elem, pos) => {
 }
 
 // Words of a string to array
-const stringToArray = phrase => {
+const stringWordsToArray = phrase => {
 
-	let pos = 0, array = []
+	let arrayPosition = 0, wordsOnArray = []
 	for (let i = 0 ; i < phrase.length ; i++) {
-		if (array[pos] === undefined) array[pos] = ""
-		if (phrase[i] === " ") pos++
-    	array[pos] += phrase[i]
+		if (wordsOnArray[arrayPosition] === undefined) wordsOnArray[arrayPosition] = ""
+    	wordsOnArray[arrayPosition] += phrase[i]
+		if (phrase[i] === " ") {
+			let deleteSpace = wordsOnArray[arrayPosition]
+			wordsOnArray[arrayPosition] = ""
+			for (let i = 0 ; i < deleteSpace.length-1 ; i++) {
+				wordsOnArray[arrayPosition] += deleteSpace[i]
+			}
+			arrayPosition++
+		}
     }
-	return array
+	return wordsOnArray
 
 }
 
-// Discount
-//		(1000, 20) will return 800 */
-
-
-// Function time transcurred to today
-//		(new date(1984,4,23)) will return 36 years
+// Sum array elements
+const sumArray = numArray => numArray.reduce((result, el) => result + el)
