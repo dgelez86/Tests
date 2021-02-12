@@ -2,21 +2,23 @@ let numArray = [2,4,3,7,9,1]
 // for (let i = 23; i >= 0; i--) 
 //     numArray.push(i)
 
+let numArray2 = [2,4,3]
 
-const sortArray = numArray => {
 
-    for (let i = 0 ; i <= numArray.length-1 ; i++) {
-        if (numArray[i] > numArray[i+1]) {
-            let change = numArray[i+1]
-            numArray[i+1] = numArray[i]
-            numArray[i] = change
-        }
+// const sortArray = numArray => {
+
+//     for (let i = 0 ; i <= numArray.length-1 ; i++) {
+//         if (numArray[i] > numArray[i+1]) {
+//             let change = numArray[i+1]
+//             numArray[i+1] = numArray[i]
+//             numArray[i] = change
+//         }
         
-    }
+//     }
 
-    return numArray
+//     return numArray
 
-}
+// }
 
 // const esPrimo = num1 => {
 //     for (let i = 2 ; i < num1 ; i++)
@@ -30,4 +32,7 @@ const sortArray = numArray => {
 // console.log(stringWordsToArray("hola mundo hola mundo"))
 // console.log(repeatString("hola mundo", 4))
 console.log(numArray)
-console.log(sortArray(numArray))
+console.log(numArray2)
+numArray2 = numArray
+console.log(numArray2)
+// console.log(sortArray(numArray))
