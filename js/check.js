@@ -1,65 +1,33 @@
-// const sumarArray = arrayNumeros => arrayNumeros.reduce((result, el) => result + el)
+let numArray = [2,4,3,7,9,1]
+// for (let i = 23; i >= 0; i--) 
+//     numArray.push(i)
 
-let arrayNumeros = []
-for (let i = 0; i <= 23; i++) 
-    arrayNumeros.push(i)
 
-// console.log(sumarArray(arrayNumeros))
+const sortArray = numArray => {
 
-// const stringToArray2 = phrase => {
+    for (let i = 0 ; i <= numArray.length-1 ; i++) {
+        if (numArray[i] > numArray[i+1]) {
+            let change = numArray[i+1]
+            numArray[i+1] = numArray[i]
+            numArray[i] = change
+        }
+        
+    }
 
-// 	let arrayPosition = 0, wordsOnArray = []
-// 	for (let i = 0 ; i < phrase.length ; i++) {
-// 		if (wordsOnArray[arrayPosition] === undefined) wordsOnArray[arrayPosition] = ""
-// 		if (phrase[i] === " ") {
-// 			arrayPosition++
-// 			continue
-// 		}
-//     	wordsOnArray[arrayPosition] += phrase[i]
-// 		if (phrase[i] === " ") arrayPosition++
-//     }
-// 	return wordsOnArray
+    return numArray
 
-// }
-
-// function separarPalabras (string) {
-//     //declaramos una variable para guardar la arrayPositionición del primer caracter que no es espacio
-//     spacearrayPosition=0;
-//     //declaramos un array vacio para guardar el array de palabras que hay que devolver
-//     arrayPalabras = [];
-
-//     //recorremos el string en busca de espacios
-//     newString="";
-//     for (let i=0; i<string.length+1;i++) {
-//         if (string[i]===" "||string[i]===undefined ){
-            
-//             arrayPalabras[arrayPalabras.length] = newString;
-//             newString="";
-//             //cambiamos la arrayPositionición del último espacio encontrado
-//             spacearrayPosition=i+1;
-//         }
-//         else newString+=string[i];
-//     }
-//     return arrayPalabras;
-// }
-
-const obtenerPares = arrayNumeros => {
-    let arrayNumerosPares = []
-    arrayNumeros.forEach(el => {
-        if (el % 2 == 0) arrayNumerosPares.push(el)
-    })
-    return arrayNumerosPares
 }
 
+// const esPrimo = num1 => {
+//     for (let i = 2 ; i < num1 ; i++)
+//         if (num1 % i === 0) return console.log(`Number ${num1} is not prime`)
+//     console.log(`Number ${num1} is prime`)
+// }
 
-// console.log(stringToArray("hola mundo"))
-// console.log(stringToArray("hola mundo hola"))
-// console.log(stringToArray("hola mundo hola mundo"))
-// console.log(stringToArray2("hola mundo"))
-// console.log(stringToArray2("hola mundo hola"))
-// console.log(stringToArray2("hola mundo hola mundo"))
-// console.log(separarPalabras("hola mundo"))
-// console.log(separarPalabras("hola mundo hola"))
-// console.log(separarPalabras("hola mundo hola mundo"))
+
+// console.log(stringWordsToArray("hola mundo"))
+// console.log(stringWordsToArray("hola mundo hola"))
+// console.log(stringWordsToArray("hola mundo hola mundo"))
 // console.log(repeatString("hola mundo", 4))
-console.log(obtenerPares(arrayNumeros))
+console.log(numArray)
+console.log(sortArray(numArray))

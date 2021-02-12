@@ -240,20 +240,36 @@ const introduceElement = (array, elem, pos) => {
 // Words of a string to array
 const stringWordsToArray = phrase => {
 
-	let arrayPosition = 0, wordsOnArray = []
+	let arrayPosition = 0, ArrayOfWords = []
 	for (let i = 0 ; i < phrase.length ; i++) {
-		if (wordsOnArray[arrayPosition] === undefined) wordsOnArray[arrayPosition] = ""
-    	wordsOnArray[arrayPosition] += phrase[i]
+		if (ArrayOfWords[arrayPosition] === undefined) ArrayOfWords[arrayPosition] = ""
+    	ArrayOfWords[arrayPosition] += phrase[i]
 		if (phrase[i] === " ") {
-			let deleteSpace = wordsOnArray[arrayPosition]
-			wordsOnArray[arrayPosition] = ""
+			let deleteSpace = ArrayOfWords[arrayPosition]
+			ArrayOfWords[arrayPosition] = ""
 			for (let i = 0 ; i < deleteSpace.length-1 ; i++) {
-				wordsOnArray[arrayPosition] += deleteSpace[i]
+				ArrayOfWords[arrayPosition] += deleteSpace[i]
 			}
 			arrayPosition++
 		}
     }
-	return wordsOnArray
+	return ArrayOfWords
+
+}
+
+// Words of a string to array, v2
+const stringWordsToArray = phrase => {
+
+	let arrayOfWords = []
+	arrayOfWords[arrayOfWords.length] = ""
+	for (let i = 0 ; i < phrase.length ; i++) {
+		if (phrase[i] === " ") {
+			arrayOfWords[arrayOfWords.length] = ""
+		} else {
+			arrayOfWords[arrayOfWords.length-1] += phrase[i]
+		}	
+    }
+	return arrayOfWords
 
 }
 

@@ -113,20 +113,18 @@ const addFunction = (num1, num2) => num1 + num2
 const powerFunction = (num1, num2) => Math.pow(num1, num2)
 // 7. Crea la función separarPalabras que acepte como argumento un string y devuelva un array de palabras 'hola mundo' => [hola, mundo]
 const stringWordsToArray = phrase => {
-	let arrayPosition = 0, wordsOnArray = []
+
+	let arrayOfWords = []
+	arrayOfWords[arrayOfWords.length] = ""
 	for (let i = 0 ; i < phrase.length ; i++) {
-		if (wordsOnArray[arrayPosition] === undefined) wordsOnArray[arrayPosition] = ""
-    	wordsOnArray[arrayPosition] += phrase[i]
 		if (phrase[i] === " ") {
-			let deleteSpace = wordsOnArray[arrayPosition]
-			wordsOnArray[arrayPosition] = ""
-			for (let i = 0 ; i < deleteSpace.length-1 ; i++) {
-				wordsOnArray[arrayPosition] += deleteSpace[i]
-			}
-			arrayPosition++
-		}
+			arrayOfWords[arrayOfWords.length] = ""
+		} else {
+			arrayOfWords[arrayOfWords.length-1] += phrase[i]
+		}	
     }
-	return wordsOnArray
+	return arrayOfWords
+
 }
 // 8. Crea la función repetirString que acepte como argumento un string y un número y devuelva un string que sea el resultado de concatenar el primer string el número dado de veces
 const repeatString = (phrase, times) => {
@@ -145,7 +143,17 @@ const esPrimo = num1 => {
 // Arrays and functions
 //----------------------------------------------------------------------------------------------------------------------------
 // 10. Crear la función ordenarArray que acepta como argumento un array de números y devuelva un array ordenado de menor a mayor
-// ----------------------------------const ordenarArray = arrayNumeros => {
+const sortArray = numArray => {
+
+    for (let i = numArray.length-1 ; i >= 0 ; i--) {
+        if (numArray[i] < numArray[i-1]) {
+            let change = numArray[i-1]
+            numArray[i-1] = numArray[i]
+            numArray[i] = change
+        }
+    }
+
+}
 
 // }
 // 11. Crear la función obtenerPares que acepta como argumento un array de números y devuelva un array con los elementos pares
