@@ -81,7 +81,7 @@ let game = {
 
     }
 
-},
+    },
 
     copyPlaysDone: function(player) {
 
