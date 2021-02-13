@@ -1,8 +1,8 @@
-let numArray = [2,4,3,7,9,1]
-// for (let i = 23; i >= 0; i--) 
-//     numArray.push(i)
+// let numArray = [2,4,3,7,9,1]
+// // for (let i = 23; i >= 0; i--) 
+// //     numArray.push(i)
 
-let numArray2 = [2,4,3]
+// let numArray2 = [2,4,3]
 
 
 // const sortArray = numArray => {
@@ -18,21 +18,11 @@ let numArray2 = [2,4,3]
 
 //     return numArray
 
-// }
 
-// const esPrimo = num1 => {
-//     for (let i = 2 ; i < num1 ; i++)
-//         if (num1 % i === 0) return console.log(`Number ${num1} is not prime`)
-//     console.log(`Number ${num1} is prime`)
-// }
+const cell1 = document.getElementById('cell1').getAttribute("data-value")
 
+switch (cell1) {
+    case "1": console.log("válido"); break
+    default: console.log("válido también")
+}
 
-// console.log(stringWordsToArray("hola mundo"))
-// console.log(stringWordsToArray("hola mundo hola"))
-// console.log(stringWordsToArray("hola mundo hola mundo"))
-// console.log(repeatString("hola mundo", 4))
-console.log(numArray)
-console.log(numArray2)
-numArray2 = numArray
-console.log(numArray2)
-// console.log(sortArray(numArray))

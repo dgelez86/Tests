@@ -1,68 +1,121 @@
 let player1 = {
 
-    arrayJugadas: [],
-    turn: true,
-    victory: false,
+    card: "x",
+    playsDone: [],
 
-    makeMove: function(cell) {
-        // Comprobar si la casilla está libre (false)
-        if (board.determineOcuppedCell(cell-1) === false) {
-            // Añadir la casilla al array de movimientos del jugador
-            this.arrayJugadas.push(cell)
-            // Marcar la casilla como ocupada
-            board.arrayCells[cell-1] = true
-        }
-        board.arrayJugadas = this.arrayJugadas
-        this.victory = board.determineVictory()
+    getCard: function() {
+        return this.card
     }
 
 }
 
 let player2 = {
 
-    arrayJugadas: [],
-    turn: true,
-    victory: false,
+    card: "o",
+    playsDone: [],
 
-    makeMove: function(cell) {
-        // Comprobar si la casilla está libre (false)
-        if (board.determineOcuppedCell(cell) === false) {
-            // Añadir la casilla al array de movimientos del jugador
-            this.arrayJugadas.push(cell)
-            // Marcar la casilla como ocupada
-            board.arrayCells[cell-1] = true
-        }
-        board.arrayJugadas = this.arrayJugadas
-        this.victory = board.determineVictory()
+    getCard: function() {
+        return this.card
     }
 
 }
 
 let board = { 
 
-    count: 0,
-    arrayCells: [false, false, false, false, false, false, false, false, false],
-    arrayJugadas: [],
-    combGanadoras: [
-        [1,2,3], 
-        [1,5,9],
-        [1,4,7],
-        [2,5,8],
-        [3,5,7],
-        [3,6,9],
-        [4,5,6],
-        [7,8,9],
-    ],
+    ocuppedCells: [false, false, false, false, false, false, false, false, false],
 
-    determineVictory: function() {
+    // Comprobar si la casilla está libre (false)
+    checkOcuppedCell: function(cell) {
+        if (this.ocuppedCells[cell] === false) return false
+        else return true
+    }
+
+}
+
+let game = {
+
+    count: 0,
+    turn: 1,
+    victory: 0,
+    playerPlaysDone: [],
+    winningCombs: [[1,2,3], [1,5,9], [1,4,7], [2,5,8], [3,5,7], [3,6,9], [4,5,6], [7,8,9],],
+
+    getPlayerCard: function() {
+        if (this.turn === 1) return player1.getCard()
+        if (this.turn === 2) return player2.getCard()
+    },
+
+    getVictory: function() {
+        return this.victory
+    },
+
+    makeMove: function(cell) {
+        // Comprobar si la casilla está libre (false)
+        if (board.checkOcuppedCell(cell-1) === false) {
+            // Añadir la casilla al array de movimientos
+            this.playerPlaysDone.push(cell)
+            // Marcar la casilla como ocupada
+            board.ocuppedCells[cell-1] = true
+        }
+        // Cambia el turno
+        this.changeTurn()
+        // Copia el array de jugadas del objeto main al array de jugadas del jugador
+        this.copyPlaysDone(this.checkTurn)
+        this.fillCell(cell)
+        this.displayInfo()
+    },
+
+    fillCell: function(cell) {
+
+    switch (cell) {
+
+        case 1: cell1.innerHTML = this.getPlayerCard(); break
+        case 2: cell2.innerHTML = this.getPlayerCard(); break
+        case 3: cell3.innerHTML = this.getPlayerCard(); break
+        case 4: cell4.innerHTML = this.getPlayerCard(); break
+        case 5: cell5.innerHTML = this.getPlayerCard(); break
+        case 6: cell6.innerHTML = this.getPlayerCard(); break
+        case 7: cell7.innerHTML = this.getPlayerCard(); break
+        case 8: cell8.innerHTML = this.getPlayerCard(); break
+        case 9: cell9.innerHTML = this.getPlayerCard(); break
+
+    }
+
+},
+
+    copyPlaysDone: function(player) {
+
+        // Copiar el array de jugadas del jugador al array de jugadas de game
+        if (player === 1)
+            player1.playsDone.push(this.playerPlaysDone[this.playerPlaysDone.length-1])
+        if (player === 2)
+            player1.playsDone.push(this.playerPlaysDone[this.playerPlaysDone.length-1])
+        // Limpiar el array de jugadas del objeto game
+        this.playerPlaysDone = []
+
+    },
+
+    changeTurn: function() {
+        if (this.turn === 1) this.turn = 2
+        else this.turn = 1
+    },
+
+    checkTurn: function() {
+
+        if (this.turn === 1) return 1
+        if (this.turn === 2) return 2        
+
+    },
+
+    checkVictory: function() {
 
         // Recorrer el array de arrays de combinaciones ganadoras
-        for (let i = 0; i < this.combGanadoras.length; i++) {
+        for (let i = 0; i < this.winningCombs.length; i++) {
             // Recorrer array de UNA combinación ganadora
-            for (let j = 0; j < this.combGanadoras[i].length; j++) {
+            for (let j = 0; j < this.winningCombs[i].length; j++) {
                 // Recorrer array de movimientos del jugador
-                for (let cell = 0 ; cell < this.arrayJugadas.length ; cell++) {
-                    if (this.combGanadoras[i][j] === this.arrayJugadas[cell])
+                for (let cell = 0 ; cell < this.playsDone.length ; cell++) {
+                    if (this.winningCombs[i][j] === this.playsDone[cell])
                         this.count++
                 }
             }
@@ -73,10 +126,27 @@ let board = {
         return false
     },
 
-    // Comprobar si la casilla está libre (false)
-    determineOcuppedCell: function(cell) {
-        if (this.arrayCells[cell] === false) return false
-        else return true
+    displayInfo: function() {
+
+        let stringToShow, stringTurn, stringFreeCells, stringWon, spaces = " "
+
+        if (this.checkTurn() === 1)
+            stringTurn = "Player 1 turn. "
+        if (this.checkTurn() === 2)
+            stringTurn = "Player 2 turn. "
+
+        stringFreeCells = `Free cells: ${board.ocuppedCells.map((el,index) => {
+            if (el == false) el = index + 1
+            return el
+            }).filter(cell => cell != true)}.`
+
+        if (this.getVictory() === 0) stringWon = "Nobody won"
+        if (this.getVictory() === 1) stringWon = "Player1 won"
+        if (this.getVictory() === 2) stringWon = "Player2 won"
+
+        stringToShow = stringTurn.concat(spaces).concat(stringFreeCells).concat(spaces).concat(stringWon)
+        display.innerHTML = stringToShow
+
     }
 
 }
@@ -92,88 +162,34 @@ const start = () => {
     const cell7 = document.getElementById('cell7')
     const cell8 = document.getElementById('cell8')
     const cell9 = document.getElementById('cell9')
+    const display = document.getElementById('display')
     events()
-    playGame()
 
 }
 
 const events = () => {
 
-    cell1.addEventListener("click", fillCell())
-    cell2.addEventListener("click", fillCell())
-    cell3.addEventListener("click", fillCell())
-    cell4.addEventListener("click", fillCell())
-    cell5.addEventListener("click", fillCell())
-    cell6.addEventListener("click", fillCell())
-    cell7.addEventListener("click", fillCell())
-    cell8.addEventListener("click", fillCell())
-    cell9.addEventListener("click", fillCell())
+    cell1.addEventListener("click", () => game.makeMove(1))
+    cell2.addEventListener("click", () => game.makeMove(2))
+    cell3.addEventListener("click", () => game.makeMove(3))
+    cell4.addEventListener("click", () => game.makeMove(4))
+    cell5.addEventListener("click", () => game.makeMove(5))
+    cell6.addEventListener("click", () => game.makeMove(6))
+    cell7.addEventListener("click", () => game.makeMove(7))
+    cell8.addEventListener("click", () => game.makeMove(8))
+    cell9.addEventListener("click", () => game.makeMove(9))
 
 }
 
-const fillCell = () => {
-
-    switch (this.value) {
-
-        case 1: cell1.innerHTML = determineCard(); break
-        case 2: cell2.innerHTML = determineCard(); break
-        case 3: cell3.innerHTML = determineCard(); break
-        case 4: cell4.innerHTML = determineCard(); break
-        case 5: cell5.innerHTML = determineCard(); break
-        case 6: cell6.innerHTML = determineCard(); break
-        case 7: cell7.innerHTML = determineCard(); break
-        case 8: cell8.innerHTML = determineCard(); break
-        case 9: cell9.innerHTML = determineCard()
-
-    }
-
-}
-
-const determineCard = () => {
-
-    if (player1.turn) return "x"
-    else return "o"
-
-}
-
-const playGame = () => {
-
-    const numMovements = 1
-    let countMovements = 0
-    let casillasLibres
-
-    while ((countMovements != numMovements) && !(player1.victory == true || player2.victory == true)) {
-
-        if (player1.turn) {
-            console.log("Turno Jugador 1")
-            player1.makeMove(parseInt(window.prompt()))
-            countMovements++
-            player1.turn = false
-            player2.turn = true
-        } else {
-            console.log("Turno Jugador 2")
-            player2.makeMove(parseInt(window.prompt()))
-            countMovements++
-            player2.turn = false
-            player1.turn = true
-        } 
-
-        // console.log(`Movimiento actual ${countMovements}`)
-        console.log(board.arrayCells)
-        casillasLibres = board.arrayCells.map((el,index) => {
-            if (el == false) el = index + 1
-            return el
-        }).filter(cell => cell == true)
-        console.log(board.arrayCells)
-        console.log(`Casillas libres: ${casillasLibres}`)
-        // console.log(player1.count)
-        // console.log(player1.victory)
-
-    }
-
-    if (player1.victory) return console.log("Player 1 won")
-    if (player2.victory) return console.log("Player 2 won")
-
-}
 
 window.addEventListener("load", start)
+
+
+// const numMovements = 1
+// let countMovements = 0
+// while ((countMovements != numMovements) && !(player1.victory == true || player2.victory == true)) {}
+
+/*
+    1. Introducir el punto de ruptura
+    2. Filter filtra la primera casilla
+*/
