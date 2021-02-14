@@ -1,3 +1,6 @@
+const maxMoves = 9
+let currMoves = 0
+
 let player1 = {
 
     card: "x",
@@ -9,9 +12,41 @@ let player1 = {
 
     getPlaysDone: function() {
         return this.playsDone
-    }
+    },
 
+    /*
+        Comprueba si el movimiento ha dado la victoria
+            1. Recorre el array con las 8 combinaciones ganadoras
+            2. Recorre el array de 3 posiciones de una combinación ganadora
+            3. Recorre el array de movimientos del jugador
+            4. Compara los movimientos del jugador con las combianciones ganadoras
+            5. Si hay coincidencia, el contador de incrementa en 1. 
+                Si el contador no es 3 una vez recorrido cada combinación ganadora, reiniciamos el contador
+                Si el contador es 3, se determina la victoria del jugador poseedor del turno
+    */
+    checkVictory: function() {
+
+        let count = 0
+        // Recorre el array de las 8 combinaciones ganadoras
+        for (let i = 0; i < game.winningCombs.length; i++) {
+            // Recorre el array de 3 posiciones de una combinación ganadora
+            for (let j = 0; j < game.winningCombs[i].length; j++) {
+                // Recorre el array de movimientos del jugador
+                for (let z = 0 ; z < this.playsDone.length ; z++) {
+                    if (game.winningCombs[i][j] === this.playsDone[z])
+                        count++
+                }            
+            }
+            // Una vez recorrido el array de cada combinación ganadora, si el contador no es 3, reiniciamos el contador. Si es 3, se determina la victoria del jugador poseedor del turno
+            if (count < 3) count = 0
+            else game.victory = 1
+
+        }
+
+    } 
+            
 }
+
 
 let player2 = {
 
@@ -24,7 +59,28 @@ let player2 = {
 
     getPlaysDone: function() {
         return this.playsDone
-    }
+    },
+
+    checkVictory: function() {
+
+        let count = 0
+        // Recorre el array de las 8 combinaciones ganadoras
+        for (let i = 0; i < game.winningCombs.length; i++) {
+            // Recorre el array de 3 posiciones de una combinación ganadora
+            for (let j = 0; j < game.winningCombs[i].length; j++) {
+                // Recorre el array de movimientos del jugador
+                for (let z = 0 ; z < this.playsDone.length ; z++) {
+                    if (game.winningCombs[i][j] === this.playsDone[z])
+                        count++
+                }
+            }
+            // Una vez recorrido el array de cada combinación ganadora, si el contador no es 3, reiniciamos el contador. Si es 3, se determina la victoria del jugador poseedor del turno
+            if (count < 3) count = 0
+            else game.victory = 1
+
+        }
+
+    } 
 
 }
 
@@ -41,12 +97,18 @@ let board = {
 }
 
 let game = {
-
+    // Contador de las coincidencias de los movimientos del jugador con las apuestas ganadoras. Deben ser 3 para ganar el juego
     count: 0,
+    // Valor 1 expresa el turno del jugador 1
     turn: 1,
+    // Valor 1 espresa la victoria del jugador 1
     victory: 0,
+    // Variable que guarda la casilla jugada en el turno independientemente del jugador
     playerPlay: 0,
+    // Combinaciones ganadoras
     winningCombs: [[1,2,3], [1,5,9], [1,4,7], [2,5,8], [3,5,7], [3,6,9], [4,5,6], [7,8,9],],
+    // Determina fin del juego
+    end: false,
 
     getPlayerCard: function() {
         if (this.turn === 1) return player1.getCard()
@@ -57,33 +119,42 @@ let game = {
         return this.victory
     },
 
+    /* Método al que llama el evento click. Su función es:
+        1. Comprueba que la casilla elegida está libre (false)
+        2. Si está libre, guarda la casilla en la variable playerPlay
+        3. Marca la casilla como ocupada (true)
+        4. Copia el movimiento en el array de jugadas del jugador que lo ha hecho
+        5. Llama al método para cambiar el turno
+        6. Marca la casilla como ocupada en el html
+        7. Comprueba si el movimiento ha dado la victoria
+        8. Muestra información del estado actual juego
+        9. Incrementa los movimientos actuales en uno
+    */
     makeMove: function(cell) {
-        
-        const numMoves = 1
-        let countMoves = 0
-        while ((countMoves != numMoves) && !(game.getVictory() != 0)) {
 
-            // Comprobar si la casilla está libre (false)
+        if ((currMoves != maxMoves) && !(game.getVictory() != 0)) {
+
             if (board.checkOcuppiedCell(cell-1) === false) {
-            // Añadir la casilla al array de movimientos
-            this.playerPlay = cell
-            // Marcar la casilla como ocupada
-            board.ocuppiedCells[cell-1] = true
+                this.playerPlay = cell
+                board.ocuppiedCells[cell-1] = true
             }
-            // Cambia el turno
+            this.copyPlay()
             this.changeTurn()
-            // Copia el array de jugadas del objeto main al array de jugadas del jugador
-            this.copyPlay(this.checkTurn())
             this.fillCell(cell)
-            this.checkVictory()
-            this.displayInfo(false)
-            countMoves++
+            if (this.checkTurn() === 1) player1.checkVictory()
+            else player2.checkVictory()
+            this.displayInfo()
+            currMoves++
 
+        } else {
+            this.end = true
+            this.displayInfo()
         }
-        this.displayInfo(true)
+        
         
     },
 
+    // Marca la casilla como ocupada en el html
     fillCell: function(cell) {
 
     switch (cell) {
@@ -102,64 +173,39 @@ let game = {
 
     },
 
-    copyPlay: function(player) {
+    // Copia el movimiento en el array de jugadas del jugador que lo ha hecho
+    copyPlay: function() {
 
         // Añade la jugada del objeto game al array de jugadas del jugador
-        if (player === 1)
+        if (this.checkTurn() === 1) {
             player1.playsDone.push(this.playerPlay)
-        if (player === 2)
+            // console.log(this.playerPlay, player1.playsDone)
+        }
+            
+        if (this.checkTurn() === 2) {
             player2.playsDone.push(this.playerPlay)
-        // Reinicia jugada del objeto game
-        this.playerPlay = 0
+            // console.log(this.playerPlay, player2.playsDone)
+        }
+            
 
     },
 
+    // Método para cambiar el turno
     changeTurn: function() {
         if (this.turn === 1) this.turn = 2
         else this.turn = 1
     },
 
+    // Método que determina qué jugador posee el turno
     checkTurn: function() {
-
         if (this.turn === 1) return 1
-        if (this.turn === 2) return 2        
-
+        if (this.turn === 2) return 2
     },
 
-    checkVictory: function() {
-
-        let count = 0
-        // Recorrer el array de arrays de combinaciones ganadoras
-        for (let i = 0; i < this.winningCombs.length; i++) {
-            // Recorrer array de UNA combinación ganadora
-            for (let j = 0; j < this.winningCombs[i].length; j++) {
-                // Recorrer array de movimientos del jugador
-                if (this.checkTurn() === 1) {
-                    for (let z = 0 ; z < player1.playsDone.length ; z++)
-                        if (this.winningCombs[i][j] === player1.playsDone[z]) count++
-                } else {
-                    for (let z = 0 ; z < player2.playsDone.length ; z++)
-                        if (this.winningCombs[i][j] === player2.playsDone[z]) count++
-                }
-
-            }
-            // Reiniciar contador si no están, a la vez, las 3 casillas de una combinación ganadora
-            if (count != 3) count = 0
-        } 
-        // Si están las 3 casillas a la vez de una combinación ganadora, el jugador del turno gana
-        if (count === 3) {
-            () => { 
-                if (this.checkTurn() === 1) this.victory = 1
-                else this.victory = 2
-            }
-        }
-            
-    },
-
-    displayInfo: function(fin) {
+    displayInfo: function() {
 
         let stringToShow, stringTurn, stringFreeCells, stringWon, spaces = " "
-        if (!fin) {
+        if (this.end === false) {
 
             if (this.checkTurn() === 1) stringTurn = "Player 1 turn. "
             if (this.checkTurn() === 2) stringTurn = "Player 2 turn. "
@@ -174,16 +220,16 @@ let game = {
             stringToShow = stringTurn.concat(spaces).concat(stringFreeCells).concat(spaces).concat(stringWon)
 
         } else {
-            stringToShow = "Limit reached"
+            stringTurn = "Limit reached."
+            if (this.getVictory() === 0) stringWon = "Nobody won"
+            if (this.getVictory() === 1) stringWon = "Player1 won"
+            if (this.getVictory() === 2) stringWon = "Player2 won"
+            stringToShow = stringTurn.concat(spaces).concat(stringWon)
         }
 
         display.innerHTML = stringToShow
-        
-
-        console.log(`p1 plays ${player1.playsDone}`)
-        console.log(`p2 plays ${player1.playsDone}`)
-        console.log(`victory ${this.victory}`)
-        console.log(`turn ${this.checkTurn()}`)
+        stringToShow = ""
+        // console.log(this.count)
 
     }
 
@@ -226,7 +272,7 @@ window.addEventListener("load", start)
 
 
 /*
-    1. Introducir el punto de ruptura
+    1. Introducir el punto de ruptura --------------- resuelto
     2. Filter filtra la primera casilla
 */
 
@@ -235,8 +281,4 @@ window.addEventListener("load", start)
     1. Start -> recoger elementos DOM
     2. Capturar eventos click de la celda
     3. Método makeMove
-        - Comprueba si celda libre
-        - Añade celda a array de movimientos
-        - Cambia el turno al otro jugador
-        - Copia el array de movimientos
 */
