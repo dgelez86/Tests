@@ -56,7 +56,7 @@ const imprimeRespuestas = pregunta => {
 
     let respuestas = ""
     for (let i = 0 ; i < pregunta.respuestas.length ; i++) {
-        respuestas += imprimeRespuesta(pregunta.respuestas[i])
+        respuestas +=imprimeRespuesta(pregunta.respuestas[i])
     }
     return respuestas
 
@@ -68,7 +68,7 @@ const imprimeRespuesta = respuesta => {
     label = imprimeLabel(respuesta)
     input = imprimeInput(respuesta)
     // console.log(label.concat(input))
-    return label.concat(input)
+    return input.concat(label)
 
 }
 
