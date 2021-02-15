@@ -16,13 +16,13 @@ let chauchat = {
 
     shot: function () {
 
-        if (this.randomGenerator(1, traces) * (100/traces) > 30) {
-            for (let i = 0 ; i < this.charger.length ; i++) {
+        for (let i = 0 ; i < this.charger.length ; i++) {
+            if (this.randomGenerator(1, traces) * (100/traces) > 80) {
                 console.log(shotSound)
                 if ((i+1) % 3 === 0) console.log(" ")
-            }            
-        } else
-            console.log(blockSound)
+            } else
+            console.log(blockSound)           
+        } 
     },
 
     randomGenerator: function(min, max) {
