@@ -15,7 +15,7 @@ let chauchat = {
 
     shot: function () {
 
-        if (this.randomGenerator(1, 5) * (100/traces) > 80) {
+        if (this.randomGenerator(1, 5) * (100/traces) > 30) {
             for (let i = 0 ; i < this.charger.length ; i++) {
                 console.log(shotSound)
                 if ((i+1) % 3 === 0) console.log(" ")
@@ -32,7 +32,7 @@ let chauchat = {
 
     // determineProb: function() {
 
-    //     return this.randomGenerator(1, 100/traces) * (100/traces)
+    //     return this.randomGenerator(1, traces) * (100/traces)
 
     // }
 

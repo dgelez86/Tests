@@ -1,0 +1,16 @@
+body {
+    padding: 5rem;
+}
+
+.wrapper {
+    padding: 2rem;
+    background-color: whitesmoke;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.question {
+    width: 70%;
+}
