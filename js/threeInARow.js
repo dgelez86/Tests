@@ -27,14 +27,21 @@ let player1 = {
     checkVictory: function() {
 
         let count = 0
+        console.log("combGanadoras " + game.winningCombs)
         // Recorre el array de las 8 combinaciones ganadoras
         for (let i = 0; i < game.winningCombs.length; i++) {
+            console.log("combGanadoras actual " + game.winningCombs[i])
             // Recorre el array de 3 posiciones de una combinación ganadora
             for (let j = 0; j < game.winningCombs[i].length; j++) {
+                console.info("mini combGanadoras " + game.winningCombs[i][j])
                 // Recorre el array de movimientos del jugador
                 for (let z = 0 ; z < this.playsDone.length ; z++) {
-                    if (game.winningCombs[i][j] === this.playsDone[z])
+                    console.log("Casilla jugador " + this.playsDone[z])
+                    console.warn("Contador antes " + count)
+                    if (game.winningCombs[i][j] === this.playsDone[z]) {
                         count++
+                    }
+                    console.warn("Contador después " + count)
                 }            
             }
             // Una vez recorrido el array de cada combinación ganadora, si el contador no es 3, reiniciamos el contador. Si es 3, se determina la victoria del jugador poseedor del turno
@@ -42,11 +49,11 @@ let player1 = {
             else game.victory = 1
 
         }
+        console.error(this.playsDone)
 
     } 
             
 }
-
 
 let player2 = {
 
@@ -76,7 +83,7 @@ let player2 = {
             }
             // Una vez recorrido el array de cada combinación ganadora, si el contador no es 3, reiniciamos el contador. Si es 3, se determina la victoria del jugador poseedor del turno
             if (count < 3) count = 0
-            else game.victory = 1
+            else game.victory = 2
 
         }
 
@@ -235,6 +242,22 @@ let game = {
 
 }
 
+const resetGame = () => {
+    player1.playsDone = []
+    player2.playsDone = []
+    game.playerPlay = 0
+    game.turn = 1
+    cell1.innerHTML = ""
+    cell2.innerHTML = ""
+    cell3.innerHTML = ""
+    cell4.innerHTML = ""
+    cell5.innerHTML = ""
+    cell6.innerHTML = ""
+    cell7.innerHTML = ""
+    cell8.innerHTML = ""
+    cell9.innerHTML = ""
+}
+
 const start = () => {
 
     const cell1 = document.getElementById('cell1')
@@ -247,12 +270,15 @@ const start = () => {
     const cell8 = document.getElementById('cell8')
     const cell9 = document.getElementById('cell9')
     const display = document.getElementById('display')
+    const resetButton = document.getElementById('reset')
+    // console.log(resetButton)
     events()
 
 }
 
 const events = () => {
 
+    // resetButton.addEventListener("click", resetGame)
     cell1.addEventListener("click", () => game.makeMove(1))
     cell2.addEventListener("click", () => game.makeMove(2))
     cell3.addEventListener("click", () => game.makeMove(3))
@@ -274,6 +300,11 @@ window.addEventListener("load", start)
 /*
     1. Introducir el punto de ruptura --------------- resuelto
     2. Filter filtra la primera casilla
+    3. Llamada del evento: ¿mala práctica?
+    4. Errores de lógica:
+        - Los jugadores están cambiados
+        - La condición de victoria se muestra en el siguiente turno
+    5. Error en el botón reset
 */
 
 /*

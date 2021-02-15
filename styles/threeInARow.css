@@ -26,7 +26,7 @@ body {
 .cell,
 .display {
     margin: 1rem 0rem;
-    background-color: rgba(10, 10, 10, 0.7);;
+    background-color: rgba(10, 10, 10, 0.7);
     border: 3px solid rgba(0, 0, 0, 0.6);
     border-radius: 20px;
     text-align: center;
@@ -44,4 +44,33 @@ body {
     height: 100px;
     font-size: 4.5rem;
     font-weight: bold;
+}
+
+.cell:hover {
+    border: 3px solid blue;
+    background-color: rgba(0, 0, 255, 0.5);
+}
+
+#reset {
+    position: absolute;
+    top: 2rem;
+    left: 45rem;
+    padding: 1rem 3rem;
+    font-size: 3rem;
+    font-weight: bolder;
+    letter-spacing: 0.1rem;
+    border: 5px solid rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    background-color: rgba(10, 10, 10, 0.8);
+    color: whitesmoke;
+    transition: transform 0.2s, color 0.1s;
+}
+
+#reset:hover {
+    border: 5px solid red;
+    color: red;
+}
+
+#reset:active {
+    transform: scale(0.9);
 }
