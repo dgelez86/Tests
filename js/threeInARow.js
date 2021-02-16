@@ -1,5 +1,7 @@
 const maxMoves = 9
 let currMoves = 0
+let resetButton1
+let reset = false
 
 let player1 = {
 
@@ -27,21 +29,15 @@ let player1 = {
     checkVictory: function() {
 
         let count = 0
-        console.log("combGanadoras " + game.winningCombs)
         // Recorre el array de las 8 combinaciones ganadoras
         for (let i = 0; i < game.winningCombs.length; i++) {
-            console.log("combGanadoras actual " + game.winningCombs[i])
             // Recorre el array de 3 posiciones de una combinación ganadora
             for (let j = 0; j < game.winningCombs[i].length; j++) {
-                console.info("mini combGanadoras " + game.winningCombs[i][j])
                 // Recorre el array de movimientos del jugador
                 for (let z = 0 ; z < this.playsDone.length ; z++) {
-                    console.log("Casilla jugador " + this.playsDone[z])
-                    console.warn("Contador antes " + count)
                     if (game.winningCombs[i][j] === this.playsDone[z]) {
                         count++
                     }
-                    console.warn("Contador después " + count)
                 }            
             }
             // Una vez recorrido el array de cada combinación ganadora, si el contador no es 3, reiniciamos el contador. Si es 3, se determina la victoria del jugador poseedor del turno
@@ -49,7 +45,6 @@ let player1 = {
             else game.victory = 1
 
         }
-        console.error(this.playsDone)
 
     } 
             
@@ -126,16 +121,17 @@ let game = {
         return this.victory
     },
 
-    /* Método al que llama el evento click. Su función es:
-        1. Comprueba que la casilla elegida está libre (false)
-        2. Si está libre, guarda la casilla en la variable playerPlay
-        3. Marca la casilla como ocupada (true)
-        4. Copia el movimiento en el array de jugadas del jugador que lo ha hecho
-        5. Llama al método para cambiar el turno
-        6. Marca la casilla como ocupada en el html
-        7. Comprueba si el movimiento ha dado la victoria
-        8. Muestra información del estado actual juego
-        9. Incrementa los movimientos actuales en uno
+    /*
+        Método al que llama el evento click. Su función es:
+            1. Comprueba que la casilla elegida está libre (false)
+            2. Si está libre, guarda la casilla en la variable playerPlay
+            3. Marca la casilla como ocupada (true)
+            4. Copia el movimiento en el array de jugadas del jugador que lo ha hecho
+            5. Llama al método para cambiar el turno
+            6. Marca la casilla como ocupada en el html
+            7. Comprueba si el movimiento ha dado la victoria
+            8. Muestra información del estado actual juego
+            9. Incrementa los movimientos actuales en uno
     */
     makeMove: function(cell) {
 
@@ -146,11 +142,11 @@ let game = {
                 board.ocuppiedCells[cell-1] = true
             }
             this.copyPlay()
-            this.changeTurn()
             this.fillCell(cell)
             if (this.checkTurn() === 1) player1.checkVictory()
             else player2.checkVictory()
             this.displayInfo()
+            this.changeTurn()
             currMoves++
 
         } else {
@@ -212,14 +208,15 @@ let game = {
     displayInfo: function() {
 
         let stringToShow, stringTurn, stringFreeCells, stringWon, spaces = " "
+
         if (this.end === false) {
 
-            if (this.checkTurn() === 1) stringTurn = "Player 1 turn. "
-            if (this.checkTurn() === 2) stringTurn = "Player 2 turn. "
+            if (this.checkTurn() === 1) stringTurn = "Player 2 turn. "
+            if (this.checkTurn() === 2) stringTurn = "Player 1 turn. "
             stringFreeCells = `Free cells: ${board.ocuppiedCells.map((el,index) => {
-                if (el == false) el = index + 1
-                return el
-            }).filter(cell => cell != true)}.`
+                if (el === false) el = index + 1
+                    return el
+                }).filter(el => el !== true)}.`
             if (this.getVictory() === 0) stringWon = "Nobody won"
             if (this.getVictory() === 1) stringWon = "Player1 won"
             if (this.getVictory() === 2) stringWon = "Player2 won"
@@ -236,17 +233,26 @@ let game = {
 
         display.innerHTML = stringToShow
         stringToShow = ""
-        // console.log(this.count)
+        if (reset) {
+            display.innerHTML = stringToShow
+            reset = false
+        }
 
     }
 
 }
 
 const resetGame = () => {
+
+    currMoves = 0
     player1.playsDone = []
     player2.playsDone = []
+    board.ocuppiedCells = [false, false, false, false, false, false, false, false, false]
     game.playerPlay = 0
+    game.count = 0
+    game.victory = 0
     game.turn = 1
+    game.end = false
     cell1.innerHTML = ""
     cell2.innerHTML = ""
     cell3.innerHTML = ""
@@ -256,6 +262,9 @@ const resetGame = () => {
     cell7.innerHTML = ""
     cell8.innerHTML = ""
     cell9.innerHTML = ""
+    reset = true
+    game.displayInfo()
+
 }
 
 const start = () => {
@@ -270,15 +279,13 @@ const start = () => {
     const cell8 = document.getElementById('cell8')
     const cell9 = document.getElementById('cell9')
     const display = document.getElementById('display')
-    const resetButton = document.getElementById('reset')
-    // console.log(resetButton)
+    resetButton1 = document.getElementById('reset').addEventListener("click", resetGame)
     events()
-
+    
 }
 
 const events = () => {
-
-    // resetButton.addEventListener("click", resetGame)
+    
     cell1.addEventListener("click", () => game.makeMove(1))
     cell2.addEventListener("click", () => game.makeMove(2))
     cell3.addEventListener("click", () => game.makeMove(3))
@@ -288,6 +295,7 @@ const events = () => {
     cell7.addEventListener("click", () => game.makeMove(7))
     cell8.addEventListener("click", () => game.makeMove(8))
     cell9.addEventListener("click", () => game.makeMove(9))
+    
 
 }
 
@@ -298,13 +306,9 @@ window.addEventListener("load", start)
 
 
 /*
-    1. Introducir el punto de ruptura --------------- resuelto
-    2. Filter filtra la primera casilla
-    3. Llamada del evento: ¿mala práctica?
-    4. Errores de lógica:
-        - Los jugadores están cambiados
-        - La condición de victoria se muestra en el siguiente turno
-    5. Error en el botón reset
+    REVISAR
+        1. Encapsulamiento
+        2. Desacoplamiento
 */
 
 /*

@@ -95,12 +95,13 @@ let arrayNumeros = []
 for (let i = 0; i <= 9; i++) 
     arrayNumeros[i] = i
 // 3. Crear variable de nombre arrayNumerosPares declarada con un array con los números pares del 0 al 9 (considerando al 0 par)
-let arrayNumerosPares = []
-for (let i = 0; i <= 10; i++)
+let arrayNumerosPares = [], pos = 0
+for (let i = 0; i <= 10; i++) {
     if (i % 2 == 0) {
-        let pos = 0
         arrayNumerosPares[pos] = i
-    } 
+        pos++
+    }
+} 
 // 4. Crear variable de nombre arrayBidimensional declarada con valor array [[0, 1, 2], ['a', 'b', 'c']]
 let arrayBidimensional = [[0, 1, 2], ["a", "b", "c"]]
 //----------------------------------------------------------------------------------------------------------------------------
@@ -113,7 +114,6 @@ const addFunction = (num1, num2) => num1 + num2
 const powerFunction = (num1, num2) => Math.pow(num1, num2)
 // 7. Crea la función separarPalabras que acepte como argumento un string y devuelva un array de palabras 'hola mundo' => [hola, mundo]
 const stringWordsToArray = phrase => {
-
 	let arrayOfWords = []
 	arrayOfWords[arrayOfWords.length] = ""
 	for (let i = 0 ; i < phrase.length ; i++) {
@@ -124,11 +124,14 @@ const stringWordsToArray = phrase => {
 		}	
     }
 	return arrayOfWords
-
 }
 // 8. Crea la función repetirString que acepte como argumento un string y un número y devuelva un string que sea el resultado de concatenar el primer string el número dado de veces
+// const repeatString = (phrase, times) => phrase.concat(" / ").repeat(times)
 const repeatString = (phrase, times) => {
-    return phrase.concat(" / ").repeat(times)
+    let phraseConcat = ""
+    for (let i = 0 ; i < times ; i++)
+        phraseConcat += phrase + ". "
+    return phraseConcat
 }
 // -------------------------const repeatStringRecursive = (phrase, times) =>
 //     if (times <= 0) return phrase.concat(repeatStringRecursive(phrase, times)
@@ -142,9 +145,9 @@ const esPrimo = num1 => {
 //----------------------------------------------------------------------------------------------------------------------------
 // Arrays and functions
 //----------------------------------------------------------------------------------------------------------------------------
+// PENDIENTE REVISAR ---------------------------------------------------------------------------------------------------------
 // 10. Crear la función ordenarArray que acepta como argumento un array de números y devuelva un array ordenado de menor a mayor
 const sortArray = numArray => {
-
     for (let i = numArray.length-1 ; i >= 0 ; i--) {
         if (numArray[i] < numArray[i-1]) {
             let change = numArray[i-1]
@@ -152,29 +155,38 @@ const sortArray = numArray => {
             numArray[i] = change
         }
     }
-
 }
 
 // }
 // 11. Crear la función obtenerPares que acepta como argumento un array de números y devuelva un array con los elementos pares
+// const obtenerPares = arrayNumeros => {
+//     let arrayNumerosPares = []
+//     arrayNumeros.forEach(el => {
+//         if (el % 2 == 0) arrayNumerosPares.push(el)
+//     })
+//     return arrayNumerosPares
+// }
+// const obtenerPares = arrayNumeros => {
+//     let arrayNumerosPares = []
+//     arrayNumeros.map(el => {
+//         if (el % 2 == 0) arrayNumerosPares.push(el)
+//     })
+//     return arrayNumerosPares
+// }
 const obtenerPares = arrayNumeros => {
-    let arrayNumerosPares = []
-    arrayNumeros.forEach(el => {
-        if (el % 2 == 0) arrayNumerosPares.push(el)
-    })
-    return arrayNumerosPares
-}
-
-const obtenerPares = arrayNumeros => {
-    let arrayNumerosPares = []
-    arrayNumeros.map(el => {
-        if (el % 2 == 0) arrayNumerosPares.push(el)
-    })
+    let arrayNumerosPares = [], pos = 0
+    for (let i = 0; i <= arrayNumeros.length; i++) {
+        if (i % 2 === 0) {
+            arrayNumerosPares[pos] = i
+            pos++
+        }
+    }
     return arrayNumerosPares
 }
 // 12. Crear la función pintarArray que acepte como argumento un array y devuelva una cadena de texto Array entrada: [0, 1, 2] String salida: '[0, 1, 2]'
 let array = [0, 1, 2]
 const pintarArray = array => console.log(`[${array.toString()}]`)
+// PENDIENTE REVISAR ---------------------------------------------------------------------------------------------------------
 // 13. Crear la función arrayMapi que acepte como argumento un Array y una función y devuelva un array en el que se haya aplicado la función a cada elemento del array
 const arrayMapi = (array, function1) => array.map(function1)
 // 14. Crear la función eliminarDuplicados que acepte como argumento un array y devuelva un array en el que se hayan eliminado los duplicados
@@ -219,14 +231,26 @@ let arrayFunciones = [addFunction, minusFunction, multiply, divide]
 //----------------------------------------------------------------------------------------------------------------------------
 // 23. Crear la función ordenarArray2 que acepta como argumento un array de números y devuelva un array ordenado de mayor a menor
 // --------------------------------const ordenarArray2 = arrayNumeros => 
+// PENDIENTE REVISAR ---------------------------------------------------------------------------------------------------------
 // 24. Crear la función obtenerImpares que acepta como argumento un array de números y devuelva un array con los elementos impares
-const obtenerImpares = arrayNumeros => {
-    let arrayNumerosImpares = []
-    arrayNumeros.arrayNumeros.forEach(el => {
-        if (el % 2 != 0) arrayNumerosImpares.push(el)
-    });
-    return arrayNumerosImpares
+// const obtenerImpares = arrayNumeros => {
+//     let arrayNumerosImpares = []
+//     arrayNumeros.arrayNumeros.forEach(el => {
+//         if (el % 2 != 0) arrayNumerosImpares.push(el)
+//     });
+//     return arrayNumerosImpares
+// }
+const obtenerPares = arrayNumeros => {
+    let arrayNumerosPares = [], pos = 0
+    for (let i = 0; i <= arrayNumeros.length; i++) {
+        if (i % 2 !== 0) {
+            arrayNumerosPares[pos] = i
+            pos++
+        }
+    }
+    return arrayNumerosPares
 }
+// PENDIENTE REVISAR ---------------------------------------------------------------------------------------------------------
 // 25. Crear la función sumarArray que acepte como argumento un array numérico y devuelva la suma de los números en el array Array: [1, 2, 3] resultado: 6
 const sumArray = numArray => numArray.reduce((result, el) => result + el)
 // 26. Crear la función multiplicarArray que acepte como argumento un array numérico y devuelva la multiplicación de los números en el array Array: [2, 3, 4] resultado: 24

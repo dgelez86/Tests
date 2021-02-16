@@ -2,6 +2,15 @@ body {
     padding: 5rem;
 }
 
+p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+label {
+    margin: 1rem;
+}
+
 .wrapper {
     padding: 2rem;
     background-color: whitesmoke;
