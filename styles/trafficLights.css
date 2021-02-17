@@ -1,0 +1,66 @@
+body {
+    padding: 2rem;
+}
+
+.wrapper {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper2 {
+    display: flex;
+}
+
+.trafficLights {
+    background-color: grey;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 300px;
+}
+
+.create,
+.change,
+.input {
+    background-color: rgba(15, 15, 15, 0.6);
+    border: 3px solid rgba(10, 10, 10, 0.8);
+    border-radius: 30px;
+    box-shadow: 5px 5px 2px 1px rgba(10, 10, 10, 0.3);
+    color: whitesmoke;
+    padding: 2rem 4rem;
+    margin: 2rem;
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
+    transition: transform 0.3s, color 0.1s ;
+}
+
+.input {
+    display: flex;
+    width: 45%;
+    padding: 1rem;
+    font-size: 2rem;
+    align-items: center;
+}
+
+.create:hover,
+.change:hover {
+    color: green;
+    border-color: green;
+}
+
+.create:active,
+.change:active {
+    transform: scale(0.95);
+}
+
+.light {
+    padding: 2rem;
+    border-radius: 30px;
+    background-color: black;
+}
