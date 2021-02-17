@@ -1,5 +1,6 @@
-let lights = [], numclicks, sequencie = [], count = 0, numClicks
+let lights = [], sequencie = [], count = 0, iterator
 
+// Crea tantas luces como el indica el campo input del HTML y los guarda en un array
 const createFunction = (num) => {
 
     let light
@@ -17,6 +18,7 @@ const createFunction = (num) => {
 
 }
 
+// Crea un array de longitud igual a la longitud del array lights con los posibles colores
 const createSequencie = num => {
 
     for (let i = 0 ; i < num ; i++) {
@@ -29,20 +31,22 @@ const createSequencie = num => {
 
 }
 
+// Cambia el color de una luz. Se selecciona la luz escuencialmente acorde a los clicks
 const changeColor = () => {
 
-    numClicks = count % lights.length
-    lights[numClicks].style.backgroundColor = 
-        `rgb(${sequencie[numClicks][0]}, ${sequencie[numClicks][1]}, ${sequencie[numClicks][2]})`
+    iterator = count % lights.length
+    lights[iterator].style.backgroundColor = 
+        `rgb(${sequencie[iterator][0]}, ${sequencie[iterator][1]}, ${sequencie[iterator][2]})`
     count++
     resetOthers()
 
 }
 
+// Devuelve a las luces no seleccionadas al color original
 const resetOthers = () => {
 
     lights.forEach((light, index) => {
-        if (numClicks !== index) {
+        if (iterator !== index) {
             light.style.backgroundColor = ""
         }
     });
