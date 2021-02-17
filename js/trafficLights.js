@@ -19,9 +19,9 @@ const createFunction = (num) => {
 }
 
 // Crea un array de longitud igual a la longitud del array lights con los posibles colores
-const createSequencie = num => {
+const createSequencie = () => {
 
-    for (let i = 0 ; i < num ; i++) {
+    for (let i = 0 ; i < lights.length ; i++) {
         let color = []
         for (let j = 0 ; j < 3 ; j++) {
             color[j] = Math.round(Math.random() * 255)
@@ -53,14 +53,25 @@ const resetOthers = () => {
 
 }
 
+const resetAll = () => {
+    lights.forEach((light) => {
+        light.style.backgroundColor = ""
+    });
+    count = 0
+    sequencie = []
+    createSequencie()
+}
+
 const start = () => {
     
     const trafficLights = document.getElementById('trafficLights')
+    const reset = document.getElementById('reset')
     const numLights = document.getElementById('number').value
     const create = document.getElementById('create')
     const change = document.getElementById('change')
     create.addEventListener("click", () => createFunction(numLights))
     change.addEventListener("click", changeColor)
+    reset.addEventListener("click", resetAll)
 
 }
 
