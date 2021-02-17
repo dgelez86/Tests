@@ -39,50 +39,81 @@ const pregunta = {
         1. Llama a la función que imprime el enunciado de la pregunta
         2. Llama a la función que imprime las respuestas
 */
-const imprimePregunta = (pregunta) => {
+// function imprimePregunta(pregunta) {}
 
+const imprimePregunta = pregunta => {
+
+    // Creación del enunciado de la pregunta
     titulo = imprimeTitulo(pregunta)
     respuestas = imprimeRespuestas(pregunta)
+    question.appendChild(titulo)   
 
-    question.innerHTML = titulo.concat(respuestas)
+    respuestas.forEach(el => {
+        el.forEach(innerEl => {
+            question.appendChild(innerEl)
+        })
+    })
 
+    // console.log(titulo)
+    // console.log(respuestas)
+    
 }
 
 // Devuelve el enunciado de la pregunta
-const imprimeTitulo = pregunta => `<p>${pregunta.titulo}</p>`
+const imprimeTitulo = pregunta => {
+
+    titulo = document.createElement("p")
+    enunciado = document.createTextNode(pregunta.titulo)
+    titulo.appendChild(enunciado)
+    return titulo
+
+}
 
 // Devuelve todas las posibles respuestas
 const imprimeRespuestas = pregunta => {
-
-    let respuestas = ""
-    for (let i = 0 ; i < pregunta.respuestas.length ; i++) {
-        let result = imprimeRespuesta(pregunta.respuestas[i])
-        respuestas = respuestas.concat(result)
-        // respuestas += imprimeRespuesta(pregunta.respuestas[i])
-    }
+    let respuestas = []
+    for (let i = 0 ; i < pregunta.respuestas.length ; i++)
+        respuestas.push(imprimeRespuesta(pregunta.respuestas[i]))
     return respuestas
 
 }
 
 // Devuelve una respuesta, una opción. LLama a las funciones que imprimen el label y el input
 const imprimeRespuesta = respuesta => {
-  
-    label = imprimeLabel(respuesta)
-    input = imprimeInput(respuesta)
-    // console.log(label.concat(input))
-    return `<div class="input">${input.concat(label)}`
+    let answer = []
+    answer.push(imprimeInput(respuesta))
+    answer.push(imprimeLabel(respuesta))
+    return answer
 
 }
 
 // Devuelve el label de la opción
-const imprimeLabel = respuesta => `<label for="${respuesta.id}">${respuesta.label}</label>`
+const imprimeLabel = respuesta => {
+
+    label = document.createElement("label")
+    label.setAttribute("for", respuesta.id)
+    labelText = document.createTextNode(respuesta.label)
+    label.appendChild(labelText)
+    return label
+
+}
 
 // Devuelve el input radio de la opción
-const imprimeInput = respuesta => `<input type="radio" id="${respuesta.id}" name="${respuesta.name}" value="${respuesta.value}">`
+const imprimeInput = respuesta => {
+
+    input = document.createElement("input")
+    input.setAttribute("type", "radio")
+    input.setAttribute("id", respuesta.id)
+    input.setAttribute("name", respuesta.name)
+    input.setAttribute("value", respuesta.value)
+    return input
+
+}
 
 const start = () => {
     const question = document.getElementById('question')
     imprimePregunta(pregunta)
+    console.log(question)
 }
 
 
@@ -101,4 +132,4 @@ window.addEventListener("load", start)
         <input name="actor" type="radio" value="william-shatner">
         <label>Arnold Schwarzenegger</label>
         <input name="actor" type="radio" value="arnold-schwarzenegger">
-    </form> */
+</form> */
