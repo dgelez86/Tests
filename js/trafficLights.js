@@ -1,75 +1,97 @@
-let lights = [], sequencie = [], count = 0, iterator
+let lights = [], colors = [], count = 0, iterator
 
 // Crea tantas luces como el indica el campo input del HTML y los guarda en un array
-const createFunction = (num) => {
+const createNodes = (num) => {
 
     let light
     for (let i = 0 ; i < num ; i++) {
 
         light = document.createElement("div")
         light.setAttribute("class", "light")
-        light.setAttribute("id", "ligth" + i)
+        light.setAttribute("id", "light" + i)
         trafficLights.appendChild(light)
         lights.push(light)
 
     }
 
-    createSequencie(lights.length)
+    createColors(lights.length)
 
 }
 
 // Crea un array de longitud igual a la longitud del array lights con los posibles colores
-const createSequencie = () => {
+const createColors = () => {
 
     for (let i = 0 ; i < lights.length ; i++) {
         let color = []
         for (let j = 0 ; j < 3 ; j++) {
             color[j] = Math.round(Math.random() * 255)
         }
-        sequencie.push(color)
+        colors.push(color)
     }
 
 }
 
-// Cambia el color de una luz. Se selecciona la luz escuencialmente acorde a los clicks
+// Cambia el color de una luz. Se selecciona la luz secuencialmente acorde a los clicks
 const changeColor = () => {
+
+    // iterator = count % lights.length
+    // lights.forEach((light, index) => {
+    //     if (iterator !== index) {
+    //         light.style.backgroundColor = ""
+    //     } else {
+    //         lights[iterator].style.backgroundColor = 
+    //             `rgb(${colors[iterator][0]}, ${colors[iterator][1]}, ${colors[iterator][2]})`
+    //         count++
+    //     }
+    // });
 
     iterator = count % lights.length
     lights[iterator].style.backgroundColor = 
-        `rgb(${sequencie[iterator][0]}, ${sequencie[iterator][1]}, ${sequencie[iterator][2]})`
+                `rgb(${colors[iterator][0]}, ${colors[iterator][1]}, ${colors[iterator][2]})`
+    if (iterator > 0)
+        lights[iterator-1].style.backgroundColor = ""
     count++
-    resetOthers()
+    console.log(count, iterator)
 
 }
 
 // Devuelve a las luces no seleccionadas al color original
 const resetOthers = () => {
 
-    lights.forEach((light, index) => {
-        if (iterator !== index) {
-            light.style.backgroundColor = ""
-        }
-    });
+    // iterator = count % lights.length
+    // lights.forEach((light, index) => {
+    //     if (iterator !== index) {
+    //         light.style.backgroundColor = ""
+    //     } else {
+    //         lights[iterator].style.backgroundColor = 
+    //             `rgb(${colors[iterator][0]}, ${colors[iterator][1]}, ${colors[iterator][2]})`
+    //         count++
+    //     }
+    // });
 
 }
 
 const resetAll = () => {
-    lights.forEach((light) => {
-        light.style.backgroundColor = ""
-    });
+    // lights.forEach((light) => {
+    //     light.style.backgroundColor = ""
+    // });
+    lights[iterator].style.backgroundColor = ""
     count = 0
-    sequencie = []
-    createSequencie()
+    colors = []
+    createColors()
 }
 
 const start = () => {
     
     const trafficLights = document.getElementById('trafficLights')
-    const reset = document.getElementById('reset')
     const numLights = document.getElementById('number').value
+    const reset = document.getElementById('reset')
+    // const input = document.getElementById('number').addEventListener('change', () => {
+    //                     const numLights = document.getElementById('number').value
+    //                 })
     const create = document.getElementById('create')
     const change = document.getElementById('change')
-    create.addEventListener("click", () => createFunction(numLights))
+    create.addEventListener("click", () => createNodes(numLights))
     change.addEventListener("click", changeColor)
     reset.addEventListener("click", resetAll)
 
