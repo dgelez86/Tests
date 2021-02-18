@@ -1,4 +1,4 @@
-let lights = [], colors = [], count = 0, iterator
+let lights = [], colors = [], count = 0, iterator, numLights
 
 // Crea tantas luces como el indica el campo input del HTML y los guarda en un array
 const createNodes = (num) => {
@@ -14,8 +14,8 @@ const createNodes = (num) => {
 
     }
 
-    createColors(lights.length)
-
+    createColors()
+ 
 }
 
 // Crea un array de longitud igual a la longitud del array lights con los posibles colores
@@ -34,68 +34,43 @@ const createColors = () => {
 // Cambia el color de una luz. Se selecciona la luz secuencialmente acorde a los clicks
 const changeColor = () => {
 
-    // iterator = count % lights.length
-    // lights.forEach((light, index) => {
-    //     if (iterator !== index) {
-    //         light.style.backgroundColor = ""
-    //     } else {
-    //         lights[iterator].style.backgroundColor = 
-    //             `rgb(${colors[iterator][0]}, ${colors[iterator][1]}, ${colors[iterator][2]})`
-    //         count++
-    //     }
-    // });
-
+    
     iterator = count % lights.length
     lights[iterator].style.backgroundColor = 
-                `rgb(${colors[iterator][0]}, ${colors[iterator][1]}, ${colors[iterator][2]})`
+        `rgb(${colors[iterator][0]}, ${colors[iterator][1]}, ${colors[iterator][2]})`
     if (iterator > 0)
         lights[iterator-1].style.backgroundColor = ""
+    else
+        lights[lights.length-1].style.backgroundColor = ""
     count++
-    console.log(count, iterator)
-
-}
-
-// Devuelve a las luces no seleccionadas al color original
-const resetOthers = () => {
-
-    // iterator = count % lights.length
-    // lights.forEach((light, index) => {
-    //     if (iterator !== index) {
-    //         light.style.backgroundColor = ""
-    //     } else {
-    //         lights[iterator].style.backgroundColor = 
-    //             `rgb(${colors[iterator][0]}, ${colors[iterator][1]}, ${colors[iterator][2]})`
-    //         count++
-    //     }
-    // });
 
 }
 
 const resetAll = () => {
-    // lights.forEach((light) => {
-    //     light.style.backgroundColor = ""
-    // });
-    lights[iterator].style.backgroundColor = ""
+
+    if (iterator !== undefined)
+        lights[iterator].style.backgroundColor = ""
     count = 0
     colors = []
     createColors()
+    lights.forEach((el, index) => document.getElementById(`light${index}`).remove())
+    lights = []
+
 }
 
 const start = () => {
     
     const trafficLights = document.getElementById('trafficLights')
-    const numLights = document.getElementById('number').value
+    let numLights = document.getElementById('number').value
     const reset = document.getElementById('reset')
-    // const input = document.getElementById('number').addEventListener('change', () => {
-    //                     const numLights = document.getElementById('number').value
-    //                 })
-    const create = document.getElementById('create')
+    const createLights = document.getElementById('create')
     const change = document.getElementById('change')
-    create.addEventListener("click", () => createNodes(numLights))
+    createLights.addEventListener("click", () => createNodes(numLights))
     change.addEventListener("click", changeColor)
     reset.addEventListener("click", resetAll)
+    document.getElementById('number').addEventListener('change', () => 
+                numLights = document.getElementById('number').value)
 
 }
-
 
 window.addEventListener("load", start)
