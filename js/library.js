@@ -40,7 +40,7 @@ const doFizzBuzz = times => {
 }
 
 // Count char
-const countChar2 = (phrase = undefined) => {
+const countChar = (phrase = undefined) => {
 
     if (!phrase) console.warn("There is no string")
 	else console.log(`Phrase ${phrase} has ${phrase.length} characters`)
@@ -48,7 +48,7 @@ const countChar2 = (phrase = undefined) => {
 }
 
 // Cut Phrase
-const cutText2 = (phrase = undefined, separator = undefined) => {
+const cutText = (phrase = undefined, separator = undefined) => {
 
     if (!phrase) console.warn("There is no string")
 	else if (!separator || Math.sign(separator) === -1) 
@@ -237,7 +237,7 @@ const introduceElement = (array, elem, pos) => {
 
 }
 
-// Words of a string to array
+// Words of a string to array. split() without split()
 const stringWordsToArray = phrase => {
 
 	let arrayPosition = 0, ArrayOfWords = []
