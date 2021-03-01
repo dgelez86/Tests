@@ -89,8 +89,10 @@ class Painter {
     }
 
     paintSingleImage(imageUrl) {
+
         this.deletePrevious()
         this.createImageTag(imageUrl)
+        
     }
 
     paintMultipleImages(arrayOfImages) {
