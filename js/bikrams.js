@@ -254,6 +254,248 @@ const obtenerPares = arrayNumeros => {
 // 25. Crear la función sumarArray que acepte como argumento un array numérico y devuelva la suma de los números en el array Array: [1, 2, 3] resultado: 6
 const sumArray = numArray => numArray.reduce((result, el) => result + el)
 // 26. Crear la función multiplicarArray que acepte como argumento un array numérico y devuelva la multiplicación de los números en el array Array: [2, 3, 4] resultado: 24
+//----------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------
+// Classes
+//----------------------------------------------------------------------------------------------------------------------------
+// 1.- Crea el objeto Coche con las siguientes propiedades: marca, modelo y matricula y los métodos: acelerar {imprimirá por consola "a todo gas"} y frenar {imprimirá por consola "cuidado con la abuelita en el paso de cebra"}
+let Coche = {
+    marca: "seat",
+    modelo: 2005,
+    matricula: "2005xyz",
+    acelerar: function() {
+        console.log("a todo gas")
+    },
+    frenar: function() {
+        console.log("cuidado con la abuelita en el paso de cebra")
+    }
+}
+// 2.- Crea la clase Turismo con las siguientes propiedades: marca, modelo y matricula declaradas en el constructor y los métodos: acelerar {imprimirá por consola "a todo gas"} y frenar {imprimirá por consola "cuidado con la abuelita en el paso de cebra"}
+class Turismo {
+    constructor(marca, modelo, matricula) {
+        this.marca = marca
+        this.modelo = modelo
+        this.matricula = matricula
+    }
+    acelerar() {
+        console.log("a todo gas")
+    }
+    frenar() {
+        console.log("cuidado con la abuelita en el paso de cebra")
+    }
+}
+let car1 = new Turismo("seat megane", 2005, "2005xyz")
+// 3.- Crea una nueva instancia de Turismo (una instancia se crea con new Turismo(/Valores de las propiedades/) llamada miTurismo cuyas propiedades sean: marca: "Asiento", modelo: "Leon", matricula: "1234AAA"
+let miTurismo = new Turismo("Asiento", "Leon", "1234AAA")
+// 4.- Crea una nueva instancia de Turismo (una instancia se crea con new Turismo(/Valores de las propiedades/) llamada miSegundoTurismo cuyas propiedades sean: marca: "Vuelve", modelo: "XC90", matricula: "1540GAB"
+let miSegundoTurismo = new Turismo("Vuelve", "XC90", "1540GAB")
+// 5.- Crea una nueva clase Persona con las siguientes propiedades: nombre, apellidos, edad, gustosMusicales y los métodos: envejecer {aumentará en 1 la edad}, nuevoGusto {aceptará como argumento un string y lo añadirá al array gustosMusicales}
+class Persona {
+    constructor(nombre, apellidos, edad, gustosMusicales) {
+        this.nombre = nombre
+        this.apellidos = apellidos
+        this.edad = edad
+        this.gustosMusicales = gustosMusicales
+    }
+    envejecer() {
+        this.edad++
+    }
+    nuevoGusto(newMusic) {
+        this.gustosMusicales.push(newMusic)
+    }
+}
+// 6.- Crea una nueva instancia de Persona llamada rockero cuyas propiedades sean: nombre: "Freddie", apellidos: "Mercury", "edad": 45, gustosMusicales: ["Queen", "AC/DC"]
+let rockero = new Persona("Freddie", "Mercury", 45, ["Queen", "AC/DC"])
+// 7.- Crea una función aplicar__nuevoGusto que añada a rockero el gustoMusical "My Chemical Romance" Que no te despiste que se pida una función, solo es para poder pasar el test, aprovecha el método nuevoGusto
+const aplicar__nuevoGusto = nuevoGusto => rockero.nuevoGusto(nuevoGusto)
+aplicar__nuevoGusto("My Chemical Romance")
+// 8.- Crea un array Perro que contenga los valores: [nombre, raza, función popo {devuelve ("Ha hecho " + Math.random() * 3 + " caquitas")}]
+let nombre = "nombre", raza = "raza"
+const popo = () => `Ha hecho ${Math.random() * 3} caquitas`
+let perro = [nombre, raza, popo]
+// 9.- Crea el objeto Perrito con las propiedades: nombre, raza y el método popo {devuelve ("Ha hecho " + Math.random() * 3 + " caquitas")}
+Perrito = {
+    nombre: "nombre",
+    raza: "raza",
+    popo: function(){
+        return `Ha hecho ${Math.random() * 3} caquitas`
+    }
+}
+// 10.- Crea la clase Perrazo con las propiedades: nombre, raza y el método popo {devuelve ("Ha hecho " + Math.random() * 3 + " caquitas")}
+class Perrazo {
+    constructor(nombre, raza) {
+        this.nombre = nombre
+        this.raza = raza
+    }
+    popo() {
+        return `Ha hecho ${Math.random() * 3} caquitas`
+    }
+}
+// 11.- Crea una nueva instancia de Perrazo llamada lebrelazo cuyas propiedades sean: nombre: "Gus", raza: "Lebrel"
+let lebrelazo = new Perrazo("Gus", "Lebrel")
+// 12.- Crea la clase Husky que extienda la clase Perrazo (class Husky extends Perrazo) y añade la propiedad: heterocromia (booleano), la propiedad raza siempre será "Husky" y el método tieneHeterocromia (imprime por console "si" o "no" en base a la propiedad heterocromia)
+class Husky extends Perrazo {
+    constructor(nombre, raza = "Husky", heterocromia) {
+        super(nombre, raza)
+        this.heterocromia = heterocromia
+    }
+    tieneHeterocromia() {
+        return this.heterocromia ? "si" : "no"
+    }
+}
+// 13.- Crea una nueva instancia de Husky llamada miHusky cuyas propiedades sean: nombre: "Alaska", "heterocromia": true
+miHusky = new Husky("Alaska", "Husky", true)
+// 14.- Crea la clase Coordenadas con las propiedades: x, y
+class Coordenadas {
+    constructor(x, y) {
+        this.x = x
+        this.y = y
+    }
+}
+// 15.- Crea la clase Jugador con las propiedades: posicion (instancia de coordenadas), fuerza, velocidad (instancia de coordenadas), direccion (instancia de coordenadas) vida y los métodos: moverse {posicion.x += velocidad.x * direccion.x, posicion.y += velocidad.y * direccion.y}, perderVida {vida -= 1}
+class Jugador {
+    constructor(posicion, fuerza, velocidad, direccion, vida) {
+        this.posicion = posicion
+        this.fuerza = fuerza
+        this.velocidad = velocidad
+        this.direccion = direccion
+        this.vida = vida
+    }
+    moverse() {
+        this.posicion.x += this.velocidad.x * this.direccion.x
+        this.posicion.y += this.velocidad.y * this.direccion.y
+    }
+    perderVida() {
+        this.vida -= 1
+    }
+}
+jugador1 = new Jugador(new Coordenadas(10, 10), 20, new Coordenadas(10, 15), new Coordenadas(15, 10), 50)
+// 16.- Crea un array de instancias de Jugador llamado jugadores
+let jugadores = []
+jugadores.push(jugador1)
+// 17.- Crea el objeto FrameworksJavaScript con la propiedad: array frameworks y el método: generarFramework {añade al array frameworksJavaScript el string (randomString() + ".js")}
+let FrameworksJavaScript = {
+    arrayFrameworks: [],
+    generarFramework: function() {
+        this.arrayFrameworks.push(`${randomString()}.js`)
+    }
+}
+// 18.- Crea la clase Error_ con las propiedades: codigo, descripcion, nombre y el método: imprimirError {se imprime a si mismo (this) por pantalla}
+class Error_ {
+    constructor(codigo, descripcion, nombre) {
+        this.codigo = codigo
+        this.descripcion = descripcion
+        this.nombre = nombre
+    }
+    imprimirError() {
+        console.log(this)
+    }
+}
+// 19.- Crea la clase Huevera con las propiedades: huevosMaximos, huevos y el método comprarHuevos {acepta como argumento un número y añade ese número de huevos}
+class Huevera {
+    constructor(huevosMaximos, huevos) {
+        this.huevosMaximos = huevosMaximos
+        this.huevos = huevos
+    }
+    comprarHuevos(huevos) {
+        if (this.huevosMaximos >= this.huevos + huevos) this.huevos += huevos
+    }
+}
+// 20.- Crea el objeto Nevera con las propiedades: array productos y el getter numProductos {devuelve la suma del número de productos}
+let Nevera = { 
+    arrayProductos: [],
+    numProductos: function() {
+        return this.arrayProductos.reduce((el, acc) => acc += el)
+    }
+}
+// 21.- Crea el objeto Congelador con las propiedades: array productos y el setter compra {acepta un array como argumento y añade cada elemento a this.productos}
+let Congelador = {
+    arrayProductos: [],
+    compra: function(array) {
+        this.arrayProductos += [...array]
+    }
+}
+// 22.- Crea el objeto Pecera con las propiedades: array peces y el getter numPeces {retorna el número de peces} y el setter nuevosPeces {acepta como argumento un array y añade cada elemento a this.peces}
+let Pecera = {
+    arrayPeces: [],
+    numPeces: function() {
+        return this.arrayPeces.length
+    },
+    nuevosPeces: function(array) {
+        this.arrayPeces += [...array]
+    }
+}
+// 23.- Crea la clase Lavavajillas con las propiedades: carga (objeto {platos: numPlatos, vasos: numVasos}), el setter nuevaCarga {acepatará como argumento un objeto {platos: numPlatos, vasos: numVasos} y actualizará carga, para llamarlo se podrá utilizar el operador de propagación, si una variable queda sin definir, su valor no deberá cambiar}
+class Lavavajillas {
+    constructor(carga) {
+        this.carga = carga
+    }
+    nuevaCarga(objeto) {
+        this.carga = {...this.carga,...objeto}
+    }
+}
+let objetos = {
+    numPlatos: 10,
+    numVasos: 17
+}
+let lav1 = new Lavavajillas(objetos)
+// 24.- Crea la clase ColeccionLibros con la propiedad array libros y el getter ultimaAdquisicion {devuelve el último elemento de this.libros}
+class ColeccionLibros {
+    constructor(...libros) {
+        this.arraylibros = [...libros]
+    }
+    ultimaAdquisicion() {
+        return this.arraylibros[this.arraylibros.length-1]
+    }
+}
+// 25.- Crea la clase Humano con las propiedades: nombre y nacimiento además, deberá tener un getter edad {devuelva new Date().getFullYear() - nacimiento} y un setter edad(nuevaEdad) {cambiará nacimineto por new Date().getFullYear() - nuevaEdad}
+class Humano {
+    constructor(nombre, nacimiento) {
+        this.nombre = nombre
+        this.nacimiento = nacimiento
+    }
+    getEdad() {
+        return new Date().getFullYear() - this.nacimiento
+    }
+    setEdad(nuevaEdad) {
+        this.nacimiento = new Date().getFullYear() - nuevaEdad
+    }
+}
+// 26.- Crea la clase Horno con las propiedades: horaInicio (instancia de Tiempo(horas, minutos) ya declarado en JS/functions.js) y horaFin (instancia de Tiempo(horas, minutos)), el getter tiempoPasado {devolverá ("Llevamos " + TiempoAString(new Tiempo(horaActual - horaInicio, minutoActual - minutoInicio))) y el getter tiempoRestante {devolverá ("Quedan " + TiempoAString(new Tiempo(horaFin - horaActual, minutoFin - minutoActual))) }
+class Horno {
+    constructor(horaInicio, horaFin) {
+        this.horaInicio = horaInicio
+        this.horaFin = horaFin
+    }
+    tiempoPasado() {
+        let current = {
+            horas: new Tiempo(23, 23).horas - this.horaInicio.horas,
+            minutos: new Tiempo(23, 23).minutos - this.horaInicio.minutos
+        }
+        return TiempoAString(current)
+    }
+    tiempoRestante() {
+        let current = {
+            horas: this.horaFin.horas - new Tiempo(23, 23).horas,
+            minutos: this.horaFin.minutos - new Tiempo(23, 23).minutos
+        }
+        return TiempoAString(current)
+    }
+}
+
+class Tiempo {
+    constructor(horas, minutos) {
+        this.horas = horas;
+        this.minutos = minutos;
+    }
+}
+
+let TiempoAString = (tiempo) => {
+    console.log(tiempo);
+    return (`${tiempo.horas} ${tiempo.horas === 1 ? "hora" : "horas"} ${tiempo.minutos} ${tiempo.minutos === 1 ? " minuto" : " minutos"}`);
+}
+
+horno = new Horno(new Tiempo(23, 00), new Tiempo(23, 30))
 
 
 

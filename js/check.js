@@ -1,28 +1,37 @@
-const summation = (num, acc) => {
-
-    console.log(acc)
-    if (num <= 0) return acc
-    else {
-        acc += num
-        summation(num-1, acc)
-        return acc
+class Horno {
+    constructor(horaInicio, horaFin) {
+        this.horaInicio = horaInicio
+        this.horaFin = horaFin
     }
-
+    tiempoPasado() {
+        let current = {
+            horas: new Tiempo(23, 23).horas - this.horaInicio.horas,
+            minutos: new Tiempo(23, 23).minutos - this.horaInicio.minutos
+        }
+        return TiempoAString(current)
+    }
+    tiempoRestante() {
+        let current = {
+            horas: this.horaFin.horas - new Tiempo(23, 23).horas,
+            minutos: this.horaFin.minutos - new Tiempo(23, 23).minutos
+        }
+        return TiempoAString(current)
+    }
 }
 
-console.log(summation(8, 0))
-
-let acc = 0
-const summation2 = num => {
-
-    // console.log(acc)
-    if (num <= 0) return acc
-    else {
-        acc +=  num
-        summation2(num-1, acc)
-        return acc
+class Tiempo {
+    constructor(horas, minutos) {
+        this.horas = horas;
+        this.minutos = minutos;
     }
-    
 }
 
-console.log(summation2(8))
+let TiempoAString = (tiempo) => {
+    console.log(tiempo);
+    return (`${tiempo.horas} ${tiempo.horas === 1 ? "hora" : "horas"} ${tiempo.minutos} ${tiempo.minutos === 1 ? " minuto" : " minutos"}`);
+}
+
+horno = new Horno(new Tiempo(23, 00), new Tiempo(23, 30))
+
+console.log(horno.tiempoPasado(), horno.tiempoRestante())
+

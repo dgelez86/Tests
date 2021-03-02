@@ -1,8 +1,10 @@
 class Warrior {
 
     constructor(life, power) {
+
         this.life = life
         this.power = power
+
     }
 
     getLife() {
@@ -27,8 +29,10 @@ class Warrior {
 class Maya extends Warrior {
 
     constructor(name, life, power) {
+
         super(life, power)
         this.name = name
+
     }
 
     drinkColaCao() {
@@ -40,8 +44,10 @@ class Maya extends Warrior {
 class Azteca extends Warrior {
 
     constructor(name, life, power) {
+
         super(life, power)
         this.name = name
+
     }
 
     drinkNesquik() {
@@ -62,6 +68,7 @@ while (azteca.getLife() > 0 || maya.getLife() > 0) {
 
             case 0: case 1: case 2: case 3: case 4:
                 azteca.drinkNesquik()
+                break
             default:
                 console.log(azteca.defend(maya.attack()))
 
@@ -75,6 +82,7 @@ while (azteca.getLife() > 0 || maya.getLife() > 0) {
 
             case 0: case 1: case 2: case 3: case 4:
                 maya.drinkColaCao()
+                break
             default:
                 console.log(maya.defend(azteca.attack()))
 
