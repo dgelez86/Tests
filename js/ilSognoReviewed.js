@@ -109,6 +109,22 @@ class Painter {
 
 }
 
+const determineFunction = index => {
+
+    switch(index) {
+        case 0: painter.paintSingleImage(helicopters.getRandomMilitary()); break
+        case 1: painter.paintSingleImage(aircrafts.getRandomMilitary()); break
+        case 2: painter.paintMultipleImages(helicopters.getAll()); break
+        case 3: painter.paintMultipleImages(aircrafts.getAll()); break
+        case 4: painter.paintSingleImage(helicopters.getRandomCivil()); break
+        case 5: painter.paintSingleImage(aircrafts.getRandomCivil())
+    }
+
+}
+
 const aircrafts = new Gallery(civilAircrafts, militaryAircrafts);
 const helicopters = new Gallery(civilHelicopters, militaryHelicopter);
 const painter = new Painter();
+
+const button = document.querySelectorAll(".button")
+button.forEach((el, index) => el.addEventListener("click", () => determineFunction(index)))

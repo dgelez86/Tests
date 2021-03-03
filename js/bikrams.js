@@ -314,7 +314,7 @@ let nombre = "nombre", raza = "raza"
 const popo = () => `Ha hecho ${Math.random() * 3} caquitas`
 let perro = [nombre, raza, popo]
 // 9.- Crea el objeto Perrito con las propiedades: nombre, raza y el método popo {devuelve ("Ha hecho " + Math.random() * 3 + " caquitas")}
-Perrito = {
+let Perrito = {
     nombre: "nombre",
     raza: "raza",
     popo: function(){
@@ -403,9 +403,9 @@ class Huevera {
 }
 // 20.- Crea el objeto Nevera con las propiedades: array productos y el getter numProductos {devuelve la suma del número de productos}
 let Nevera = { 
-    arrayProductos: [],
+    arrayProductos: [1,2,3,4,5],
     numProductos: function() {
-        return this.arrayProductos.reduce((el, acc) => acc += el)
+        return this.arrayProductos.reduce((acc, el) => acc + el)
     }
 }
 // 21.- Crea el objeto Congelador con las propiedades: array productos y el setter compra {acepta un array como argumento y añade cada elemento a this.productos}
