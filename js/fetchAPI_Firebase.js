@@ -115,8 +115,7 @@ const deletePreviousNodes = () => {
 const saveSearch = (data) => {
 
     let results = data.results
-    console.log(results)
-    firebase.database().ref().update(data)
+    firebase.database().ref(input.value).update(data)
     displaySearch(results)
 
 }
@@ -125,7 +124,7 @@ const getSavedSearch = () => {
 
     deletePreviousNodes()
     let datos
-    firebase.database().ref("results").on("value", data => {datos = data.val()})
+    firebase.database().ref(input.value).on("value", data => {datos = data.val()})
     displaySearch(datos)
 }
 
