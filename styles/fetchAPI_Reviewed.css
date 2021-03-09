@@ -75,7 +75,7 @@ body {
     color: whitesmoke;
 }
 
-.divElement {
+.resultDiv {
     width:55%;
     height: 80%;
     padding: 0rem 1rem;
@@ -84,7 +84,7 @@ body {
     align-items: center;
 }
 
-.divElement:hover {
+.resultDiv:hover {
     background-color: black;
     color: whitesmoke;
     cursor: pointer;
@@ -95,7 +95,7 @@ body {
     background-color: red;
 }
 
-.divElement:active,
+.resultDiv:active,
 #searchButton:active,
 #backButton:active,
 #resetButton:active {
